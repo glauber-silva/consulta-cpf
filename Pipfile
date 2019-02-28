@@ -8,6 +8,10 @@ flake8 = "*"
 
 [packages]
 flask = "*"
+flask-sqlalchemy = "*"
+psycopg2 = "*"
+flask-migrate = "*"
+flask-api = "*"
 
 [requires]
 python_version = "3.6"
