@@ -1,4 +1,5 @@
-# services/cpf/project/config.py
+# services/cpf/src/config.py
+
 
 class BaseConfig:
     """Base Config"""
