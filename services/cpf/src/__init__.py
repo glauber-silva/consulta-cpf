@@ -1,22 +1,27 @@
 # services/cpf/src/__init__.py
 import os
 
-from flask import Flask, jsonify
+from flask import Flask
 
 
-app = Flask(__name__)
+def create_app(sript_info=None):
 
-app_settings = os.getenv('APP_SETTINGS')
-app.config.from_object(app_settings)
+    # instantiate app
+    app = Flask(__name__)
 
+    # config
+    app_settings = os.getenv('APP_SETTINGS')
+    app.config.from_object(app_settings)
 
-@app.route('/cpf/ping', methods=['GET'])
-def ping_pong():
-    return jsonify({
-        'status': 'success',
-        'message': 'pong!'
-    })
+    # extensions
 
-@app.route("/cpf/<string:cpf>")
-def consulta(cpf):
-    return 'Cpf consultado: {0}'.format(cpf)
+    # blueprints
+    from src.api.cpf import cpf_blueprint
+    app.register_blueprint(cpf_blueprint)
+
+    # shell context for cli
+    @app.shell_context_processor
+    def ctx():
+        return {'app': app}
+
+    return app
