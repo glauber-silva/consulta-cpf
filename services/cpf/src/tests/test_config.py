@@ -3,7 +3,9 @@ import unittest
 from flask import current_app
 from flask_testing import TestCase
 
-from src import app
+from src import create_app
+
+app = create_app()
 
 
 class TestDevConfig(TestCase):

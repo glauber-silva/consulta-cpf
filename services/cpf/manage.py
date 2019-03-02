@@ -4,7 +4,7 @@ from src import create_app
 
 
 app = create_app()
-cli = FlaskGroup(create_app=create_app)fala
+cli = FlaskGroup(create_app=create_app)
 
 
 @cli.command()
