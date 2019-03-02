@@ -1,10 +1,14 @@
 # services/cpf/src/__init__.py
+import os
 
 from flask import Flask, jsonify
 
+
 app = Flask(__name__)
 
-app.config.from_object('src.config.DevConfig')
+app_settings = os.getenv('APP_SETTINGS')
+app.config.from_object(app_settings)
+
 
 @app.route('/cpf/ping', methods=['GET'])
 def ping_pong():

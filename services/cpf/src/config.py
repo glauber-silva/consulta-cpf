@@ -4,7 +4,7 @@
 class BaseConfig:
     """Base Config"""
     TESTING = False
-
+    SECRET_KEY = 'somegreatstringhere20199102'
 
 class DevConfig(BaseConfig):
     """Dev configs"""
