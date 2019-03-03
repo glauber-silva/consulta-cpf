@@ -2,13 +2,13 @@ from flask import jsonify
 
 
 def verify_has_11_digits(cpf):
-    if cpf.is_digit():
-        return True
-    return False
+    return True
 
 
 def verify_has_only_digits(cpf):
-    return True
+    if cpf.is_digit():
+        return True
+    return False
 
 
 def check_cpf_in_serpro(cpf):
