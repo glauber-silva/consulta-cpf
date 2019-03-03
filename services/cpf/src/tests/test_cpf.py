@@ -14,7 +14,6 @@ class TestCpfService(BaseTestCase):
         self.assertIn('pong!', data['message'])
         self.assertIn('success', data['status'])
 
-
     def test_get_cpf_situation(self):
         """
         Get cpf situation
@@ -25,7 +24,6 @@ class TestCpfService(BaseTestCase):
             data = json.loads(response.data.decode())
             self.assertEqual(response.status_code, 200)
             self.assertIn("regular", data["status"])
-
 
     def test_cpf_is_digit(self):
         """
@@ -38,7 +36,6 @@ class TestCpfService(BaseTestCase):
             self.assertEqual(response.status_code, 200)
             self.assertIn('CPF Inválido, deve conter somente números', data['error']['reason'])
 
-
     def test_cpf_has_11_digits(self):
         """
         CPF must have 11 digits
@@ -49,5 +46,17 @@ class TestCpfService(BaseTestCase):
             data = json.loads(response.data.decode())
             self.assertEqual(response.status_code, 200)
             self.assertIn('CPF Inválido, deve conter 11 digitos', data['error']['reason'])
+
+    def test_cpf_is_not_empty(self):
+        """
+        CPF must be not empty
+        """
+        cpf = ''
+        with self.client:
+            response = self.client.get('/cpf/{cpf}')
+            data = json.loads(response.data.decode())
+            self.assertEqual(response.status_code, 200)
+            self.assertIn('CPF Inválido, deve conter 11 digitos', data['error']['reason'])
+
 if __name__ == "__main__":
     unittest.main()
