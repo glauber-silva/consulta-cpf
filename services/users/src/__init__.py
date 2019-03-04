@@ -2,7 +2,7 @@ import os
 
 from flask import Flask
 from src.api import init as init_users
-
+from src.db import db
 
 def create_app(sript_info=None):
 
@@ -14,6 +14,7 @@ def create_app(sript_info=None):
     app.config.from_object(app_settings)
 
     # extensions
+    db.init_app(app)
 
     # blueprints
     init_users(app)
@@ -21,6 +22,6 @@ def create_app(sript_info=None):
     # shell context for cli
     @app.shell_context_processor
     def ctx():
-        return {'app': app}
+        return {'app': app, 'db': db}
 
     return app
