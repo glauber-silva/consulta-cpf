@@ -33,7 +33,7 @@ services:
 
   users-db:
     build:
-      context: ./services/users/src/db
+      context: services/users/src/ext
       dockerfile: Dockerfile
     ports:
       - 5435:5432
