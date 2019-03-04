@@ -1,7 +1,7 @@
 import unittest
 from flask.cli import FlaskGroup
 from src import create_app
-from src.db import db
+from src.ext import db
 from src.api.models import User
 
 app = create_app()

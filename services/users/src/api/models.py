@@ -1,5 +1,5 @@
 from sqlalchemy.sql import func
-from src.db import db
+from src.ext import db
 
 
 class User(db.Model):
