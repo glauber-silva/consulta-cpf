@@ -1,0 +1,20 @@
+# base image
+FROM python:3.7.2-alpine
+
+# set working directory
+RUN mkdir -p /usr/src/app
+WORKDIR /usr/src/app
+
+# add app
+COPY . /usr/src/app
+
+# install pipenv
+RUN pip install pipenv
+
+# add and install requirements
+COPY ./Pipfile /usr/src/app/Pipfile
+COPY ./Pipfile.lock /usr/src/app/Pipfile.lock
+RUN pipenv install --system
+
+# run server
+CMD python manage.py run -h 0.0.0.0
