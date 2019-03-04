@@ -1,5 +1,26 @@
-from flask import Flask, jsonify
+import os
 
-app = Flask(__name__)
+from flask import Flask
+from src.api import init as init_users
 
 
+def create_app(sript_info=None):
+
+    # instantiate app
+    app = Flask(__name__)
+
+    # config
+    app_settings = os.getenv('APP_SETTINGS')
+    app.config.from_object(app_settings)
+
+    # extensions
+
+    # blueprints
+    init_users(app)
+
+    # shell context for cli
+    @app.shell_context_processor
+    def ctx():
+        return {'app': app}
+
+    return app
