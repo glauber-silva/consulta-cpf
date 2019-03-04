@@ -1,5 +1,7 @@
 import os
 import unittest
+
+from decouple import config
 from flask import current_app
 from flask_testing import TestCase
 
@@ -14,7 +16,7 @@ class TestDevConfig(TestCase):
         return app
 
     def test_app_is_development(self):
-        self.assertTrue(app.config['SECRET_KEY'] == 'somegreatstringhere20199102')
+        self.assertTrue(app.config['SECRET_KEY'] == config("SECRET_KEY"))
         self.assertFalse(current_app is None)
 
 
@@ -24,7 +26,7 @@ class TestTestConfig(TestCase):
         return app
 
     def test_app_is_testing(self):
-        self.assertTrue(app.config['SECRET_KEY'] == 'somegreatstringhere20199102')
+        self.assertTrue(app.config['SECRET_KEY'] == config("SECRET_KEY"))
         self.assertTrue(app.config['TESTING'])
         self.assertFalse(app.config['PRESERVE_CONTEXT_ON_EXCEPTION'])
 
@@ -35,7 +37,7 @@ class TestProdConfig(TestCase):
         return app
 
     def test_app_is_production(self):
-        self.assertTrue(app.config['SECRET_KEY'] == 'somegreatstringhere20199102')
+        self.assertTrue(app.config['SECRET_KEY'] == config("SECRET_KEY"))
         self.assertFalse(app.config['TESTING'])
 
 

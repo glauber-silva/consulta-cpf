@@ -8,6 +8,8 @@ verify_ssl = true
 [packages]
 flask = "*"
 flask-testing = "*"
+requests= "*"
+python-decouple = "*"
 
 [requires]
 python_version = "3.7"

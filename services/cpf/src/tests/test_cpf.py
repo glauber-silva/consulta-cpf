@@ -14,27 +14,16 @@ class TestCpfService(BaseTestCase):
         self.assertIn('pong!', data['message'])
         self.assertIn('success', data['status'])
 
-    def test_get_cpf_situation(self):
-        """
-        Get cpf situation
-        """
-        cpf = '40442820135'
-        with self.client:
-            response = self.client.get('/cpf/{cpf}')
-            data = json.loads(response.data.decode())
-            self.assertEqual(response.status_code, 200)
-            self.assertIn("regular", data["status"])
-
     def test_cpf_is_digit(self):
         """
         CPF must only accept digits
-       """
+        """
         cpf = 'ABCD5678901'
         with self.client:
-            response = self.client.get('/cpf/{cpf}')
+            response = self.client.get('/cpf/'+cpf)
             data = json.loads(response.data.decode())
-            self.assertEqual(response.status_code, 200)
-            self.assertIn('CPF Inválido, deve conter somente números', data['error']['reason'])
+            self.assertEqual(response.status_code, 404)
+            self.assertIn("CPF Inválido. Um CPF válido deve conter 11 digitos numéricos", data['error']['reason'])
 
     def test_cpf_has_11_digits(self):
         """
@@ -42,10 +31,10 @@ class TestCpfService(BaseTestCase):
         """
         cpf = '5678901'
         with self.client:
-            response = self.client.get('/cpf/{cpf}')
+            response = self.client.get('/cpf/'+cpf)
             data = json.loads(response.data.decode())
-            self.assertEqual(response.status_code, 200)
-            self.assertIn('CPF Inválido, deve conter 11 digitos', data['error']['reason'])
+            self.assertEqual(response.status_code, 404)
+            self.assertIn("CPF Inválido. Um CPF válido deve conter 11 digitos numéricos", data['error']['reason'])
 
     def test_cpf_is_not_empty(self):
         """
@@ -53,10 +42,22 @@ class TestCpfService(BaseTestCase):
         """
         cpf = ''
         with self.client:
-            response = self.client.get('/cpf/{cpf}')
+            response = self.client.get('/cpf/'+cpf)
+            data = json.loads(response.data.decode())
+            self.assertEqual(response.status_code, 404)
+            self.assertIn("CPF Inválido. Um CPF válido deve conter 11 digitos numéricos", data['error']['reason'])
+
+    def test_get_cpf_situation_regular(self):
+        """
+        Get cpf situation
+        """
+        cpf = '40442820135'
+        with self.client:
+            response = self.client.get('/cpf/'+cpf)
             data = json.loads(response.data.decode())
             self.assertEqual(response.status_code, 200)
-            self.assertIn('CPF Inválido, deve conter 11 digitos', data['error']['reason'])
+            self.assertIn("regular", data["status"])
+
 
 if __name__ == "__main__":
     unittest.main()
