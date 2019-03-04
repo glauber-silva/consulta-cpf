@@ -6,6 +6,9 @@ verify_ssl = true
 [dev-packages]
 
 [packages]
+flask = "*"
+flask-testing = "*"
+python-decouple = "*"
 
 [requires]
 python_version = "3.7"
