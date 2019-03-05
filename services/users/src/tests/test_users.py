@@ -84,7 +84,7 @@ class TestUsersService(BaseTestCase):
             data = json.loads(response.data.decode())
             self.assertEqual(response.status_code, 400)
             self.assertIn(
-                'Este email já existe', data['message'])
+                'Este email já esta registrado', data['message'])
             self.assertIn('falha', data['status'])
 
 
