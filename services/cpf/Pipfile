@@ -4,12 +4,14 @@ url = "https://pypi.org/simple"
 verify_ssl = true
 
 [dev-packages]
+flake8 = "*"
 
 [packages]
 flask = "*"
 flask-testing = "*"
 requests= "*"
 python-decouple = "*"
+coverage = "*"
 
 [requires]
-python_version = "3.7"
+python_version = "3.7.0"
