@@ -21,7 +21,8 @@ class TestUsersService(BaseTestCase):
                 '/users',
                 data=json.dumps({
                     'username': 'teste',
-                    'email': 'teste@email.com'
+                    'email': 'teste@email.com',
+                    'password': 'maiorqueoito'
                 }),
                 content_type='application/json',
             )
@@ -69,7 +70,8 @@ class TestUsersService(BaseTestCase):
                 '/users',
                 data=json.dumps({
                     'username': 'teste3',
-                    'email': 'teste3@email.com'
+                    'email': 'teste3@email.com',
+                    'email': 'maiorqueoito'
                 }),
                 content_type='application/json',
             )
@@ -77,7 +79,8 @@ class TestUsersService(BaseTestCase):
                 '/users',
                 data=json.dumps({
                     'username': 'teste3',
-                    'email': 'teste3@email.com'
+                    'email': 'teste3@email.com',
+                    'password': 'maiorqueoito'
                 }),
                 content_type='application/json',
             )

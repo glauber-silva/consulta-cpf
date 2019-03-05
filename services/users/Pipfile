@@ -17,6 +17,7 @@ flask-sqlalchemy = "*"
 flask-migrate = "*"
 psycopg2-binary = "*"
 coverage = "*"
+flask-bcrypt = "*"
 
 [requires]
 python_version = "3.7.0"
