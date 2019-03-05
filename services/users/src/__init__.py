@@ -2,8 +2,8 @@ import os
 
 from flask import Flask
 from src.api import init as init_users
-from ext import db
-
+from src.ext.db import db
+from src.api.models import User
 
 def create_app(sript_info=None):
 
@@ -23,6 +23,6 @@ def create_app(sript_info=None):
     # shell context for cli
     @app.shell_context_processor
     def ctx():
-        return {'app': app, 'ext': db}
+        return {'app': app, 'db': db}
 
     return app

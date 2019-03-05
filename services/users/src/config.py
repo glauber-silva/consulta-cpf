@@ -1,3 +1,5 @@
+import os
+
 from decouple import config
 
 class BaseConfig:
@@ -9,16 +11,16 @@ class BaseConfig:
 
 class DevConfig(BaseConfig):
     """Dev configs"""
-    SQLALCHEMY_DATABASE_URI = config("DATABASE_URL")
+    SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL')
 
 
 class TestConfig(BaseConfig):
     TESTING = True
-    SQLALCHEMY_DATABASE_URI = config("DATABASE_TEST_URL")
+    SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_TEST_URL')
 
 
 class ProdConfig(BaseConfig):
     """Prod Configs"""
-    SQLALCHEMY_DATABASE_URI = config("DATABASE_URL")
+    SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL')
 
 
