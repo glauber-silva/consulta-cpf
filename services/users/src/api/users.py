@@ -27,10 +27,11 @@ def add_user():
         return jsonify(resp), 400
     username = data.get('username')
     email = data.get('email')
+    password = data.get('password')
     try:
         user = User.query.filter_by(email=email).first()
         if not user:
-            db.session.add(User(username=username, email=email))
+            db.session.add(User(username=username, email=email, password=password))
             db.session.commit()
             resp['status'] = 'success'
             resp['message'] = f'{email} foi adicionado!'
@@ -38,6 +39,6 @@ def add_user():
         else:
             resp['message'] = 'Este email já esta registrado'
             return jsonify(resp), 400
-    except exc.IntegrityError:
+    except (exc.IntegrityError, ValueError):
         db.session.rollback()
         return jsonify(resp), 400

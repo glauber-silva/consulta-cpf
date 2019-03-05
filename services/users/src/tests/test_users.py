@@ -55,7 +55,7 @@ class TestUsersService(BaseTestCase):
         with self.client:
             response = self.client.post(
                 '/users',
-                data=json.dumps({'email': 'teste2@email.com'}),
+                data=json.dumps({'email': 'teste2@email.com', 'password': 'maiorqueoito'}),
                 content_type='application/json',
             )
             data = json.loads(response.data.decode())
@@ -71,7 +71,7 @@ class TestUsersService(BaseTestCase):
                 data=json.dumps({
                     'username': 'teste3',
                     'email': 'teste3@email.com',
-                    'email': 'maiorqueoito'
+                    'password': 'maiorqueoito'
                 }),
                 content_type='application/json',
             )
@@ -90,6 +90,23 @@ class TestUsersService(BaseTestCase):
                 'Este email já esta registrado', data['message'])
             self.assertIn('falha', data['status'])
 
+    def test_add_user_invalid_json_keys_no_password(self):
+        """
+        Ensure error is thrown if the JSON object
+        does not have a password key.
+        """
+        with self.client:
+            response = self.client.post(
+                '/users',
+                data=json.dumps(dict(
+                    username='teste',
+                    email='teste@email.com')),
+                content_type='application/json',
+            )
+            data = json.loads(response.data.decode())
+            self.assertEqual(response.status_code, 400)
+            self.assertIn('Dados Inválidos.', data['message'])
+            self.assertIn('falha', data['status'])
 
 if __name__ == "__main__":
     unittest.main()
