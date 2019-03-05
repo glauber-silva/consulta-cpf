@@ -18,6 +18,7 @@ flask-migrate = "*"
 psycopg2-binary = "*"
 coverage = "*"
 flask-bcrypt = "*"
+pyjwt = "*"
 
 [requires]
 python_version = "3.7.0"

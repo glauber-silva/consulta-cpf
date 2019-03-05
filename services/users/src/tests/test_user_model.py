@@ -14,6 +14,7 @@ class TestUserModel(BaseTestCase):
         self.assertEqual(user.username, 'test')
         self.assertEqual(user.email, 'test@email.com')
         self.assertTrue(user.active)
+        self.assertTrue(user.password)
 
     def test_add_user_duplicate_username(self):
         add_user('test', 'test@email.com', 'maiorqueoito')
@@ -39,6 +40,18 @@ class TestUserModel(BaseTestCase):
         user_one = add_user('test', 'test@email.com', 'maiorqueoito')
         user_two = add_user('test2', 'test2@email.com', 'maiorqueoito')
         self.assertNotEqual(user_one.password, user_two.password)
+
+    def test_encode_auth_token(self):
+        user = add_user('test', 'test@email.com', 'maiorqueoito')
+        auth_token = user.encode_auth_token(user.id)
+        self.assertTrue(isinstance(auth_token, bytes))
+
+    def test_decode_auth_token(self):
+        user = add_user('test', 'test@email.com', 'maiorqueoito')
+        auth_token = user.encode_auth_token(user.id)
+        self.assertTrue(isinstance(auth_token, bytes))
+        self.assertEqual(User.decode_auth_token(auth_token), user.id)
+
 
 if __name__ == '__main__':
     unittest.main()
