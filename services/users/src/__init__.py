@@ -2,8 +2,11 @@ import os
 
 from flask import Flask
 from src.api import init as init_users
-from src.ext.db import db
+from src.ext.db import db, migrate
 from src.api.models import User
+
+
+
 
 def create_app(sript_info=None):
 
@@ -16,6 +19,7 @@ def create_app(sript_info=None):
 
     # extensions
     db.init_app(app)
+    migrate.init_app(app, db)
 
     # blueprints
     init_users(app)

@@ -3,3 +3,4 @@
 Dockerfile-dev
 htmlcov
 Dockerfile-prod
+migrations
