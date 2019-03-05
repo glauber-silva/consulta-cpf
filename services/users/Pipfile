@@ -16,6 +16,7 @@ sqlalchemy = "*"
 flask-sqlalchemy = "*"
 flask-migrate = "*"
 psycopg2-binary = "*"
+coverage = "*"
 
 [requires]
 python_version = "3.7.0"
