@@ -3,6 +3,7 @@ from flask import Blueprint, jsonify, request
 from sqlalchemy import exc
 from src.api.models import User
 from src.ext.db import db
+from src.api.utils import authenticate
 
 users_blueprint = Blueprint('users', __name__)
 
@@ -17,7 +18,8 @@ def ping_pong():
 
 
 @users_blueprint.route('/users', methods=['post'])
-def add_user():
+@authenticate
+def add_user(resp):
     data = request.get_json()
     resp = {
         "status": "falha",

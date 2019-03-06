@@ -3,9 +3,10 @@ from sqlalchemy import exc, or_
 
 from src.api.models import User
 from src.ext.db import db, bcrypt
-
+from src.api.utils import authenticate
 
 auth_blueprint = Blueprint('auth', __name__)
+
 
 @auth_blueprint.route('/auth/register', methods=['POST'])
 def register_user():
@@ -85,22 +86,11 @@ def login_user():
 
 
 @auth_blueprint.route('/auth/logout', methods=['get'])
-def logout_user():
+@authenticate
+def logout_user(resp):
     # get auth token
-    auth_header = request.headers.get('Authorization')
     resp = {
-        'status': 'falha',
-        'message': 'Forneça o token válido'
+        'status': 'success',
+        'message': 'Desconectado com sucesso.'
     }
-    if auth_header:
-        auth_token = auth_header.split(' ')[1]
-        resp_token = User.decode_auth_token(auth_token)
-        if not isinstance(resp_token, str):
-            resp['status'] = 'success'
-            resp['message'] = 'Desconectado com sucesso.'
-            return jsonify(resp), 200
-        else:
-            resp['message'] = resp
-            return jsonify(resp), 401
-    else:
-        return jsonify(resp), 403
+    return jsonify(resp), 200
