@@ -1,5 +1,6 @@
 from flask import Blueprint, jsonify
-from .util import verify_has_only_digits, verify_has_11_digits, check_cpf_in_serpro, STATUS_LIST, SERPRO_CODES
+from .util import verify_has_only_digits, verify_has_11_digits, check_cpf_in_serpro, STATUS_LIST, SERPRO_CODES, \
+    authenticate
 
 cpf_blueprint = Blueprint('cpf', __name__)
 
@@ -13,6 +14,7 @@ def ping_pong():
 
 
 @cpf_blueprint.route('/cpf/', methods=['get'])
+@authenticate
 def root_route():
     return jsonify({
             "error": {
@@ -22,6 +24,7 @@ def root_route():
 
 
 @cpf_blueprint.route('/cpf/<cpf>', methods=['get'])
+@authenticate
 def check_cpf(cpf):
     """
     check cpf

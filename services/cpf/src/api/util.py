@@ -1,8 +1,32 @@
 from enum import Enum
 import json
+from functools import wraps
+
 import requests
-from flask import jsonify, current_app
+from flask import jsonify, current_app, request
 from decouple import config
+
+
+def authenticate(f):
+    @wraps(f)
+    def decorated_function(*args, **kwargs):
+        response = {
+            'status': 'error',
+            'message': 'Alguma coisa deu errado, Contate-nos.'
+        }
+        code = 401
+        auth_header = request.headers.get('Authorization')
+        if not auth_header:
+            response['message'] = 'Forneça um token válido.'
+            code = 403
+            return jsonify(response), code
+        auth_token = auth_header.split(' ')[1]
+        resp = ensure_authentication(auth_token)
+        if not resp:
+            response['message']= "Token inválido."
+            return jsonify(response), code
+        return f(response, *args, **kwargs)
+    return decorated_function
 
 
 def ensure_authentication(token):
