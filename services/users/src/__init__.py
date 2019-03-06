@@ -1,7 +1,8 @@
 import os
 
 from flask import Flask
-from src.api import init as init_users
+from src.api import init as init_blueprints
+
 from src.ext.db import db, migrate, bcrypt
 from src.api.models import User
 
@@ -23,7 +24,7 @@ def create_app(sript_info=None):
     bcrypt.init_app(app)
 
     # blueprints
-    init_users(app)
+    init_blueprints(app)
 
     # shell context for cli
     @app.shell_context_processor
