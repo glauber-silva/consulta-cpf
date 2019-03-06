@@ -22,6 +22,13 @@ class User(db.Model):
         self.email = email
         self.password = bcrypt.generate_password_hash(password).decode()
 
+    def to_json(self):
+        return {
+            'id': self.id,
+            'username': self.username,
+            'email': self.email,
+            'active': self.active,
+        }
 
     def encode_auth_token(self,user_id):
         """

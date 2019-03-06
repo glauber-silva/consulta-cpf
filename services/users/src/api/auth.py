@@ -89,8 +89,20 @@ def login_user():
 @authenticate
 def logout_user(resp):
     # get auth token
-    resp = {
+    response = {
         'status': 'success',
         'message': 'Desconectado com sucesso.'
     }
-    return jsonify(resp), 200
+    return jsonify(response), 200
+
+
+@auth_blueprint.route('/auth/status', methods=['get'])
+@authenticate
+def get_user_status(resp):
+    # user = User.query.filter_by(id=resp).first()
+    response = {
+        'status': 'success',
+        'message': 'Sucesso.',
+        'data': resp['user']
+    }
+    return jsonify(response), 200

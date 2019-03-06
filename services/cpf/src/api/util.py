@@ -1,8 +1,22 @@
 from enum import Enum
-
+import json
 import requests
-from flask import jsonify
+from flask import jsonify, current_app
 from decouple import config
+
+
+def ensure_authentication(token):
+    url = '{0}/auth/status'.format(current_app.config['USERS_SERVICE_URL'])
+    bearer = 'Bearer {0}'.format(token)
+    headers = {'Authorization': bearer}
+    resp = requests.get(url, headers=headers)
+    data = json.loads(resp.text)
+    if resp.status_code == 200 and \
+        data['status'] == 'success' and \
+        data['data']['active']:
+        return data
+    else:
+        return False
 
 
 def verify_has_11_digits(cpf):
