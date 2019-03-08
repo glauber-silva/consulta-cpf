@@ -15,7 +15,7 @@ services:
       - APP_SETTINGS=src.config.DevConfig
       - SERPRO_TOKEN=4e1a1858bdd584fdc077fb7d80f39283
       - SERPRO_URL=https://apigateway.serpro.gov.br/consulta-cpf-trial/v1/cpf/
-      - USERS_SERVICE_URL=http://localhost
+      - USERS_SERVICE_URL=http://users:5000
     depends_on:
       - users
 
