@@ -1,14 +1,23 @@
-from enum import Enum
 import json
 import os
 from functools import wraps
 
 import requests
-from requests.adapters import HTTPAdapter
-from urllib3 import Retry
+from flask import jsonify, request, current_app
+import src
 
 
-from flask import jsonify, current_app, request
+STATUS_LIST = {
+    "0": "regular",
+    "2": "suspenso",
+    "3": "falecido",
+    "4": "irregular",
+    "5": "cancelado",
+    "8": "nulo",
+    "9": "cancelado"
+}
+
+SERPRO_CODES = ["0","2", "3", "4", "5", "8", "9"]
 
 
 def authenticate(f):
@@ -69,7 +78,6 @@ def ensure_authentication(token):
         return False
 
 
-
 def verify_has_11_digits(cpf):
     if len(cpf) != 11:
         return False
@@ -91,17 +99,6 @@ def check_cpf_in_serpro(cpf):
     }
     r = requests.get(api_url_base, headers=headers)
 
+    src.app.logger.info(" CPF: {0} | RAW: {1}| STATUS: {2}".format(cpf, r.json(), r.status_code))
+
     return r.json()
-
-
-STATUS_LIST = {
-    "0": "regular",
-    "2": "suspenso",
-    "3": "falecido",
-    "4": "irregular",
-    "5": "cancelado",
-    "8": "nulo",
-    "9": "cancelado"
-}
-
-SERPRO_CODES = ["0","2", "3", "4", "5", "8", "9"]

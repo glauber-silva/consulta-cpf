@@ -1,8 +1,8 @@
 import json
-import os
 import unittest
+
 from src.tests.base import BaseTestCase
-from flask import current_app
+
 
 class TestCpfService(BaseTestCase):
     """Tests for the CPF Service"""

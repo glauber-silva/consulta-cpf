@@ -1,4 +1,7 @@
 import unittest
+import logging
+from logging import Formatter, FileHandler
+from logging.handlers import RotatingFileHandler
 
 import coverage
 from flask.cli import FlaskGroup
