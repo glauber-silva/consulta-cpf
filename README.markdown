@@ -30,6 +30,7 @@ c2b89861492d        consulta-cpf_cpf        "/bin/sh -c 'python …"   26 second
 daa7ee69765f        consulta-cpf_users      "/usr/src/app/entryp…"   30 seconds ago      Up 26 seconds       0.0.0.0:5002->5000/tcp    consulta-cpf_users_1
 f5c227f36bd8        consulta-cpf_users-db   "docker-entrypoint.s…"   32 seconds ago      Up 30 seconds       0.0.0.0:32772->5432/tcp   consulta-cpf_users-db_1
 ```
+
 Para testes execute: `sh test.sh`
 
 Depois desses passos a aplicação estará pronta pra uso. Abaixo há uma documentação básica
@@ -54,6 +55,7 @@ Abaixo algumas saidas simples
     "status": "success"
 }
 ```
+
 ### Users (Para Login)
 ```JSON
 {
