@@ -1,7 +1,8 @@
 import json
+import os
 import unittest
 from src.tests.base import BaseTestCase
-
+from flask import current_app
 
 class TestCpfService(BaseTestCase):
     """Tests for the CPF Service"""
@@ -20,7 +21,10 @@ class TestCpfService(BaseTestCase):
         """
         cpf = 'ABCD5678901'
         with self.client:
-            response = self.client.get('/cpf/'+cpf)
+            response = self.client.get('/cpf/'+cpf,
+                   content_type='application/json',
+                   headers={'Authorization': f'Bearer teste'}
+            )
             data = json.loads(response.data.decode())
             self.assertEqual(response.status_code, 404)
             self.assertIn("CPF Inválido. Um CPF válido deve conter 11 digitos numéricos", data['error']['reason'])
@@ -31,7 +35,10 @@ class TestCpfService(BaseTestCase):
         """
         cpf = '5678901'
         with self.client:
-            response = self.client.get('/cpf/'+cpf)
+            response = self.client.get('/cpf/'+cpf,
+                   content_type='application/json',
+                   headers={'Authorization': f'Bearer teste'}
+            )
             data = json.loads(response.data.decode())
             self.assertEqual(response.status_code, 404)
             self.assertIn("CPF Inválido. Um CPF válido deve conter 11 digitos numéricos", data['error']['reason'])
@@ -42,7 +49,10 @@ class TestCpfService(BaseTestCase):
         """
         cpf = ''
         with self.client:
-            response = self.client.get('/cpf/'+cpf)
+            response = self.client.get('/cpf/'+cpf,
+                   content_type='application/json',
+                   headers={'Authorization': f'Bearer teste'}
+            )
             data = json.loads(response.data.decode())
             self.assertEqual(response.status_code, 404)
             self.assertIn("CPF Inválido. Um CPF válido deve conter 11 digitos numéricos", data['error']['reason'])
@@ -53,7 +63,10 @@ class TestCpfService(BaseTestCase):
         """
         cpf = '40442820135'
         with self.client:
-            response = self.client.get('/cpf/'+cpf)
+            response = self.client.get('/cpf/'+cpf,
+                   content_type='application/json',
+                   headers={'Authorization': f'Bearer teste'}
+            )
             data = json.loads(response.data.decode())
             self.assertEqual(response.status_code, 200)
             self.assertIn("regular", data["status"])

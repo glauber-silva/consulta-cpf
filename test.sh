@@ -12,8 +12,8 @@ inspect() {
 # run unit and integration tests
 sudo docker-compose -f docker-compose-dev.yml build
 sudo docker-compose -f docker-compose-dev.yml up -d
-# sudo docker-compose -f docker-compose-dev.yml exec users python manage.py recreate_db
-# sudo docker-compose -f docker-compose-dev.yml exec users python manage.py seed_db
+sudo docker-compose -f docker-compose-dev.yml exec users python manage.py recreate_db
+sudo docker-compose -f docker-compose-dev.yml exec users python manage.py seed_db
 sudo docker-compose -f docker-compose-dev.yml exec users python manage.py test
 inspect $? users
 sudo docker-compose -f docker-compose-dev.yml exec users flake8 project

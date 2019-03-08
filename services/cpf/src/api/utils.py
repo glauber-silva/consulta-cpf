@@ -1,46 +1,73 @@
 from enum import Enum
 import json
+import os
 from functools import wraps
 
 import requests
+from requests.adapters import HTTPAdapter
+from urllib3 import Retry
+
+
 from flask import jsonify, current_app, request
-from decouple import config
 
 
 def authenticate(f):
     @wraps(f)
     def decorated_function(*args, **kwargs):
         response = {
-            'status': 'error',
+            'status': 'falha',
             'message': 'Alguma coisa deu errado, Contate-nos.'
         }
-        code = 401
-        auth_header = request.headers.get('Authorization')
-        if not auth_header:
-            response['message'] = 'Forneça um token válido.'
-            code = 403
-            return jsonify(response), code
-        auth_token = auth_header.split(' ')[1]
-        resp = ensure_authentication(auth_token)
+        token = None
+        if 'Authorization' in request.headers:
+            auth_header = request.headers['Authorization']
+            try:
+                token = auth_header.split(" ")[1]
+            except IndexError:
+                response['message'] = 'Forneça um token válido.'
+                code = 403
+                return jsonify(response), code
+
+        if not token:
+            return jsonify({
+                'status': 'falha',
+                'message': 'Token inexistente.'
+            }), 401
+
+        resp = ensure_authentication(token)
+
         if not resp:
-            response['message']= "Token inválido."
-            return jsonify(response), code
-        return f(response, *args, **kwargs)
+            response['message'] = "Token inválido."
+
+            return jsonify(response), 401
+
+        return f(*args, **kwargs)
+
     return decorated_function
 
 
 def ensure_authentication(token):
+    if current_app.config['TESTING']:
+        # new
+        test_response = {
+            'data': {'id': 333},
+            'status': 'success',
+        }
+        return test_response
+
     url = '{0}/auth/status'.format(current_app.config['USERS_SERVICE_URL'])
     bearer = 'Bearer {0}'.format(token)
     headers = {'Authorization': bearer}
     resp = requests.get(url, headers=headers)
     data = json.loads(resp.text)
+
     if resp.status_code == 200 and \
         data['status'] == 'success' and \
         data['data']['active']:
         return data
     else:
         return False
+
 
 
 def verify_has_11_digits(cpf):
@@ -56,8 +83,8 @@ def verify_has_only_digits(cpf):
 
 
 def check_cpf_in_serpro(cpf):
-    api_token = config('SERPRO_TOKEN')
-    api_url_base = config("SERPRO_URL") + cpf
+    api_token = os.environ.get('SERPRO_TOKEN')
+    api_url_base = os.environ.get("SERPRO_URL") + cpf
     headers = {
         'Content-Type': 'application/json',
         'Authorization': 'Bearer {0}'.format(api_token)

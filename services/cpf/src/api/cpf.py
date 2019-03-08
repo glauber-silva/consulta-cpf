@@ -1,5 +1,7 @@
-from flask import Blueprint, jsonify
-from .util import verify_has_only_digits, verify_has_11_digits, check_cpf_in_serpro, STATUS_LIST, SERPRO_CODES, \
+import logging
+
+from flask import Blueprint, jsonify, current_app
+from .utils import verify_has_only_digits, verify_has_11_digits, check_cpf_in_serpro, STATUS_LIST, SERPRO_CODES, \
     authenticate
 
 cpf_blueprint = Blueprint('cpf', __name__)

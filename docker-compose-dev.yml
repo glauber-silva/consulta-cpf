@@ -15,7 +15,7 @@ services:
       - APP_SETTINGS=src.config.DevConfig
       - SERPRO_TOKEN=4e1a1858bdd584fdc077fb7d80f39283
       - SERPRO_URL=https://apigateway.serpro.gov.br/consulta-cpf-trial/v1/cpf/
-      - USERS_SERVICE_URL=http://localhost:5002
+      - USERS_SERVICE_URL=http://localhost
     depends_on:
       - users
 
@@ -42,7 +42,17 @@ services:
       context: services/users/src/ext
       dockerfile: Dockerfile
     ports:
-      - 5435:5432
+      - 5432
     environment:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
+
+  nginx:
+    build:
+      context: ./services/nginx
+      dockerfile: Dockerfile-dev
+    restart: always
+    ports:
+      - 80:80
+    depends_on:
+      - users

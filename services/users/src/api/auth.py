@@ -26,10 +26,9 @@ def register_user():
     password = data.get('password')
     try:
         # check if user exist
-        user = User.query.filter(
-            or_(User.username == username, User.email == email)
-        ).first()
-        if not user:
+        user_by_name = User.query.filter_by(username=username).first()
+        user_by_email = User.query.filter_by(email=email).first()
+        if not user_by_name and not user_by_email:
             # add new user
             newuser = User(
                 username=username,
