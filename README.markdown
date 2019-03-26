@@ -7,8 +7,8 @@ Foi usado Python, Flask, Pipenv, Docker, Docker Compose e Nginx para a construç
 
 ## Instalação
 1. Clone o respositório: `git clone https://glauber-silva@bitbucket.org/glauber-silva/consulta-cpf.git`.
-2. `cd` no diretório `consulta-cpf`: `cd shipment-list`.
-3. Execute o comando `sh install.sh`
+2. `Acesse o diretório pelo comando: `cd consulta-cpf`.
+3. Execute o comando `sh install.sh` ,
 4. Verifique a versão do Docker com o comando: `docker -v`.
 ```bash
 Docker version 18.09.0, build 4d60db4
@@ -30,6 +30,7 @@ c2b89861492d        consulta-cpf_cpf        "/bin/sh -c 'python …"   26 second
 daa7ee69765f        consulta-cpf_users      "/usr/src/app/entryp…"   30 seconds ago      Up 26 seconds       0.0.0.0:5002->5000/tcp    consulta-cpf_users_1
 f5c227f36bd8        consulta-cpf_users-db   "docker-entrypoint.s…"   32 seconds ago      Up 30 seconds       0.0.0.0:32772->5432/tcp   consulta-cpf_users-db_1
 ```
+
 Para testes execute: `sh test.sh`
 
 Depois desses passos a aplicação estará pronta pra uso. Abaixo há uma documentação básica
@@ -54,6 +55,7 @@ Abaixo algumas saidas simples
     "status": "success"
 }
 ```
+
 ### Users (Para Login)
 ```JSON
 {
@@ -127,7 +129,6 @@ Authorization: Bearer jwt.token.here
 Abaixo alguns CPF para degustação:
 
 | CPF           | SITUAÇÃO CADASTRAL              | 
-|---------------|---------------------------------|
 |---------------|---------------------------------|
 | 40442820135   |   CPF Regular                   |
 | 63017285995	|   CPF Regular                   |
