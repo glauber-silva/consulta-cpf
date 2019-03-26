@@ -1,0 +1,35 @@
+Precisamos que você desenvolva uma API REST que nos informe a situação
+cadastral de um CPF.
+
+** Requisitos
+ - Somente usuários autenticados podem usar sua API( via token );
+ - Sua API deve consultar os dados do CPF diretamente na API do SERPRO;
+ - O retorno com sucesso deve ser um JSON no formato:
+ {
+	"status": "regular"|"suspenso"|"irregular"|"cancelado"|"nulo"|"falecido"
+ }
+
+ - O retorno com erro deve ser um JSON no formato:
+ {
+	"error": {
+		"reason": "error description",
+ 	}
+ }
+
+ - Toda e qualquer consulta na sua API deve gerar um log que deve conter as seguintes informações:
+ - timestamp
+ - cpf
+ - retorno raw da API do SERPRO
+ - HTTP status code da API do SERPRO
+
+**Tecnologias:
+ - Linguagem: python 3
+ - Framework: flask
+ - Gerenciador de dependências: pipenv ou pip( requirements.txt )
+ - Você pode usar outras tecnologias/libs que deixem sua implementação flexível, apenas fique atento para o prazo.
+
+**Extras
+ - Os items nessa sessão não são obrigatórios, porém contarão como pontos extras:
+ - Dockerize sua solução mas não publique sua imagem. Basta criar um diretório docker na raíz do projeto e colocar qualquer arquivo relacionado dentro dele.
+ - Seguir o 12factor app .
+ - Collection do postman com alguns exemplos de respostas possíveis.
