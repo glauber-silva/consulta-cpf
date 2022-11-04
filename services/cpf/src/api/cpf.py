@@ -60,5 +60,5 @@ def check_cpf(cpf):
                 "reason": "CPF Inválido. Um CPF válido deve conter 11 digitos numéricos"
             }
         }
-
+        #TODO: improve excpetion classes here and try improve readbility
         return jsonify(response_object), 404
